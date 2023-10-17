@@ -1,12 +1,10 @@
 import { LaunchOptions, chromium, firefox, webkit } from '@playwright/test'
 
-const options: LaunchOptions = {
-  headless: process.env.HEAD,
-  // slowMo: 500,
-}
+const options: LaunchOptions = {}
 
 export const InvokeBrowser = () => {
   const browserType = process.env.BROWSER
+  options.headless = Boolean(process.env.HEAD)
 
   switch (browserType) {
     case 'chrome':
