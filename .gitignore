@@ -1,0 +1,7 @@
+node_modules/
+/playwright-report/
+/playwright/.cache/
+cucumber-report/*
+test-result/*
+.vscode
+@rerun.txt
