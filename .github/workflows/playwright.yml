@@ -9,15 +9,17 @@ jobs:
     name: 'Playwright Tests'
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.39.0-jammy
+      image: mcr.microsoft.com/playwright:v1.38.1-jammy
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 18
+      - name: Install dependencies using yarn
+        run: yarn install
+
       - name: Install Playwright
         run: npx playwright install --with-deps
-      - name: Install dependencies
-        run: yarn
-      - name: Run your tests
+
+      - name: Run your tests using yarn
         run: yarn test
