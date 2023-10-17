@@ -1,8 +1,8 @@
 const fs = require('fs-extra')
 
-async function createFolder(folderName: string) {
+function createFolder(folderName: string) {
   try {
-    await fs.emptyDir(folderName)
+    fs.emptyDir(folderName)
     console.log(`Created! Folder ${folderName}`)
   } catch (err) {
     console.error(`Failed! Folder ${folderName}`)
