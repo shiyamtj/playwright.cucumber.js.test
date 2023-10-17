@@ -23,3 +23,11 @@ jobs:
 
       - name: Run your tests using yarn
         run: yarn test
+
+      - name: Upload report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: cucumber-report
+          path: cucumber-report/
+          retention-days: 30
