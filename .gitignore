@@ -3,5 +3,5 @@ node_modules/
 /playwright/.cache/
 cucumber-report/*
 test-result/*
-.vscode
+# .vscode
 @rerun.txt
