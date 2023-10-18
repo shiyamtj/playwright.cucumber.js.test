@@ -1,8 +1,9 @@
-import { getEnv } from './env/env'
+import { getEnv, setEnv } from './env/env'
 
 const report = require('multiple-cucumber-html-reporter')
 
 getEnv()
+setEnv()
 
 report.generate({
   jsonDir: './test-result/',
@@ -20,7 +21,7 @@ report.generate({
     device: process.env.DEVICE,
     platform: {
       name: process.env.PLATFORM,
-      // version: '16.04',
+      version: process.env.PLATFORM_VERSION,
     },
   },
   // customData: {
