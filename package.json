@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "npx ts-node support/init.ts",
     "test": "cross-env ENV=test cucumber-js test",
-    "test:report": "yarn pretest & cross-env ENV=test cucumber-js test & cross-env BROWSER=chrome PLATFORM=windows DEVICE=local npx ts-node support/report.ts",
+    "test:report": "yarn pretest & cross-env ENV=test cucumber-js test & cross-env ENV=test npx ts-node support/report.ts",
     "test:rerun:report": "cross-env ENV=test cucumber-js test & cucumber-js -p rerun @rerun.txt & npx ts-node support/report.ts"
   },
   "devDependencies": {
