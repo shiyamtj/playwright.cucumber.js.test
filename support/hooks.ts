@@ -53,3 +53,16 @@ AfterStep(async function ({ pickle, result }) {
   // })
   // await this.attach(screenshotImage, 'image/png')
 })
+
+const getTime = () => {
+  const date = new Date()
+  const formattedDate = date.toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZoneName: 'short',
+  })
+  return formattedDate
+}

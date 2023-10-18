@@ -27,5 +27,5 @@ Then('User should able to see Dashboard text', async () => {
   const dashboardText = await pageFixture.page
     .locator('header.oxd-topbar h6')
     .textContent()
-  expect(dashboardText).toBe('Dashboard1')
+  expect(dashboardText).toBe('Dashboard')
 })
