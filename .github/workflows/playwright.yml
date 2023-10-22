@@ -29,6 +29,6 @@ jobs:
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: cucumber-report
-          path: cucumber-report/
+          name: test-result
+          path: test-result/
           retention-days: 2
