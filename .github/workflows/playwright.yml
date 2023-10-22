@@ -25,6 +25,9 @@ jobs:
       - name: Run your tests using yarn
         run: yarn test
 
+      - name: Run custom report using yarn
+        run: yarn posttest
+
       - name: Upload report
         uses: actions/upload-artifact@v3
         if: always()
