@@ -2,7 +2,7 @@ import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
 import { pageFixture } from '../../support/pageFixture'
 import { expect } from '@playwright/test'
 
-setDefaultTimeout(10000)
+setDefaultTimeout(60000)
 
 Given('User launch OrangeHrm site', async () => {
   await pageFixture.page.goto(process.env.BASEURL)
