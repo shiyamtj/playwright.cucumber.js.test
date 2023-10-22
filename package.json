@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "pretest": "npx ts-node support/init.ts",
-    "test": "cross-env ENV=test cucumber-js test || true",
+    "test": "cross-env ENV=test cucumber-js test ; Write-Output $true",
     "posttest": "node ./support/htmlReportGenerator.js"
   },
   "devDependencies": {
