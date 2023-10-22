@@ -10,6 +10,7 @@ declare global {
       PLATFORM: string
       PLATFORM_VERSION: string
       DEVICE: string
+      VIDEO: 'true' | 'false'
     }
   }
 }

@@ -8,13 +8,13 @@
     "require": ["./features_steps/**/*.steps.ts", "./support/hooks.ts"],
     "requireModule": ["ts-node/register"],
     "format": [
-      "html:./cucumber-report/cucumber-report.html",
+      "html:./test-result/reports/cucumber-report.html",
       "progress-bar",
       "json:./test-result/test-results.json",
       "rerun:@rerun.txt"
     ],
-    "parallel": 2,
-    "retry": 2
+    "parallel": 1,
+    "retry": 0
   },
   "rerun": {
     "dryRun": false,
@@ -24,7 +24,7 @@
     "require": ["./features_steps/**/*.steps.ts", "./support/hooks.ts"],
     "requireModule": ["ts-node/register"],
     "format": [
-      "html:./cucumber-report/cucumber-report.html",
+      "html:./test-result/reports/cucumber-report.html",
       "progress-bar",
       "json:./test-result/test-results.json",
       "rerun:@rerun.txt"

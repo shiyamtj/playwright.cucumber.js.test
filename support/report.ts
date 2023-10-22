@@ -7,7 +7,7 @@ setEnv()
 
 report.generate({
   jsonDir: './test-result/',
-  reportPath: './cucumber-report/',
+  reportPath: './test-result/reports/',
   reportName: 'Playwright Automation Report',
   pageTitle: 'Test Report Page Title',
   displayDuration: true,

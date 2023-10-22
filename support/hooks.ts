@@ -11,6 +11,9 @@ import { Browser, BrowserContext, Page, chromium } from '@playwright/test'
 import { pageFixture } from './pageFixture'
 import { InvokeBrowser } from './browserManager'
 import { getEnv } from './env/env'
+import { createLogger } from 'winston'
+import { options } from './logger'
+const fs = require('fs-extra')
 
 let browser: Browser
 let context: BrowserContext
@@ -21,23 +24,47 @@ BeforeAll(async function () {
   browser = await InvokeBrowser()
 })
 
-Before(async function () {
-  context = await browser.newContext()
+Before(async function ({ pickle }) {
+  const scenarioName = pickle.name + pickle.id
+
+  context =
+    process.env.VIDEO === 'true'
+      ? await browser.newContext({
+          recordVideo: {
+            dir: './test-result/videos',
+          },
+        })
+      : await browser.newContext()
+
   page = await context.newPage()
   pageFixture.page = page
+  pageFixture.logger = createLogger(options(scenarioName))
 })
 
 After(async function ({ pickle, result }) {
+  let videoPath: string
+  let img: Buffer
+
   if (result?.status === Status.FAILED) {
-    const screenshotImage = await page.screenshot({
-      path: `./test-result/screenshots/${pickle.name}`,
+    img = await pageFixture.page.screenshot({
+      path: `./test-result/screenshots/${pickle.name}.png`,
       type: 'png',
     })
-    await this.attach(screenshotImage, 'image/png')
-  }
 
-  await page.close()
+    if (process.env.VIDEO === 'true') {
+      videoPath = await pageFixture.page.video().path()
+    }
+  }
+  await pageFixture.page.close()
   await context.close()
+
+  if (result?.status === Status.FAILED) {
+    await this.attach(img, 'image/png')
+
+    if (process.env.VIDEO === 'true') {
+      await this.attach(fs.readFileSync(videoPath), 'video/webm')
+    }
+  }
 })
 
 AfterAll(async function () {

@@ -4,7 +4,7 @@ const options: LaunchOptions = {}
 
 export const InvokeBrowser = () => {
   const browserType = process.env.BROWSER
-  options.headless = Boolean(process.env.HEAD)
+  options.headless = process.env.HEAD === 'true'
 
   switch (browserType) {
     case 'chrome':

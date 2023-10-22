@@ -9,6 +9,4 @@ function createFolder(folderName: string) {
     console.error(`Error! ${err}`)
   }
 }
-
-createFolder('cucumber-report')
 createFolder('test-result')
