@@ -3,7 +3,7 @@ run-name: 'E2E Swag Labs tests'
 on:
   workflow_dispatch: {}
   schedule:
-    - cron: '30 20 * * 1-5'
+    - cron: '30 20 * * 1'
 env:
   BRAND: 'swaglabs'
 

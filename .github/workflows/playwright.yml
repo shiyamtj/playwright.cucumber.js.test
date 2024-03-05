@@ -1,9 +1,8 @@
 name: Playwright CucumberJS Tests
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  workflow_dispatch: {}
+  # schedule:
+  #   - cron: '30 20 * * 1'
 jobs:
   playwright:
     name: 'Playwright Tests'
