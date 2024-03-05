@@ -6,8 +6,8 @@ on:
 jobs:
   playwright:
     name: 'Playwright Tests'
-    runs-on: self-hosted
-    # runs-on: ubuntu-latest
+    # runs-on: self-hosted
+    runs-on: ubuntu-latest
     # container:
     #   image: mcr.microsoft.com/playwright:v1.38.1-jammy
     steps:
