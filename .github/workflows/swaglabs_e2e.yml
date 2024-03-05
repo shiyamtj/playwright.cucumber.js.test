@@ -1,0 +1,43 @@
+name: E2E Tests
+run-name: 'E2E Swag Labs tests'
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '30 20 * * 1-5'
+env:
+  BRAND: 'swaglabs'
+
+jobs:
+  run-matrix:
+    strategy:
+      matrix:
+        BROWSER: [chrome,firefox]
+      fail-fast: false
+    runs-on:
+      - self-hosted
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker Image
+        run: |-
+            docker build -t playwright-docker --build-arg
+      - name: Run E2E Cucumber tests in docker
+        env: 
+          RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
+        run: 
+          docker run playwright-docker:latest sh -c "${{env.RUN_COMMAND}}"
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        env:
+          ARTIFACT_NAME: 'Report-${{matrix.BROWSER}}'
+        with:
+          name: '${{env.ARTIFACT_NAME}}'
+          path: ./test-result
+          if-no-files-found: warn
+          retention-days: 7
+        
+      
+    
