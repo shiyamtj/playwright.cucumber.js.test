@@ -27,9 +27,9 @@ jobs:
         env:
           RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
         run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
+      # - name: List files in the repository
+      #   run: |
+      #     ls ${{ github.workspace }}
       - name: Upload artifact
         if: always()
         uses: actions/upload-artifact@v3
