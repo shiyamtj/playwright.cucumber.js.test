@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@cucumber/cucumber": "^9.6.0",
-    "@playwright/test": "^1.38.1",
+    "@playwright/test": "^1.42.1",
     "@types/cucumber-html-reporter": "^5.0.1",
     "@types/node": "^20.8.3",
     "cross-env": "^7.0.3",

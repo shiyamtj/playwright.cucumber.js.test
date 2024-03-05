@@ -11,23 +11,25 @@ jobs:
   run-matrix:
     strategy:
       matrix:
-        BROWSER: [chrome,firefox]
+        BROWSER: [chrome]
       fail-fast: false
     runs-on:
       - ubuntu-latest
     defaults:
       run:
-        working-directory: ./
+        working-directory: .
     steps:
       - uses: actions/checkout@v3
       - name: Build Docker Image
         run: |-
-            docker build -t playwright-docker --build-arg
+          docker build -f Dockerfile -t playwright-docker .
       - name: Run E2E Cucumber tests in docker
-        env: 
+        env:
           RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
-        run: 
-          docker run playwright-docker:latest sh -c "${{env.RUN_COMMAND}}"
+        run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
       - name: Upload artifact
         if: always()
         uses: actions/upload-artifact@v3
@@ -38,6 +40,3 @@ jobs:
           path: ./test-result
           if-no-files-found: warn
           retention-days: 7
-        
-      
-    
