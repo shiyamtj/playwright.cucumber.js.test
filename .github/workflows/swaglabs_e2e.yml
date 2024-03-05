@@ -26,7 +26,7 @@ jobs:
       - name: Run E2E Cucumber tests in docker
         env:
           RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
-        run: docker run playwright-docker:latest sh -c "${{env.RUN_COMMAND}}"
+        run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
@@ -37,6 +37,6 @@ jobs:
           ARTIFACT_NAME: 'Report-${{matrix.BROWSER}}'
         with:
           name: '${{env.ARTIFACT_NAME}}'
-          path: ../test-result
+          path: ./test-result
           if-no-files-found: warn
           retention-days: 7
