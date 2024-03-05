@@ -35,7 +35,6 @@ Before(async function ({ pickle }) {
           },
         })
       : await browser.newContext()
-
   page = await context.newPage()
   pageFixture.page = page
   pageFixture.logger = createLogger(options(scenarioName))

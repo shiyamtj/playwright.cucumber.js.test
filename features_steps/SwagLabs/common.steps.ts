@@ -1,26 +1,23 @@
 import { Given, When, Then, setDefaultTimeout } from '@cucumber/cucumber'
 import { pageFixture } from '../../support/pageFixture'
 import { expect } from '@playwright/test'
+import LoginPage from '../../pages/SwagLabs/loginPage'
 
+let loginPage: LoginPage
 setDefaultTimeout(60000)
 
-Given('User launch OrangeHrm site', async () => {
-  await pageFixture.page.goto(process.env.BASEURL)
-  pageFixture.logger.info('Goto site successful')
+Given('User launch Swag Labs site', async () => {
+  loginPage = new LoginPage(pageFixture.page)
+  await loginPage.loadLoginPage()
 })
 
-When('User logs in with valid credentials on OrangeHrm', async () => {
-  await pageFixture.page.locator("input[name='username']").fill('Admin')
-  await pageFixture.page.locator("input[name='password']").fill('admin123')
-  await pageFixture.page.getByRole('button', { name: /login/i }).click()
-  await pageFixture.page.waitForTimeout(5000)
-  pageFixture.logger.info('Login with credentials successful')
+When('User logs in with valid credentials on Swag Labs', async () => {
+  await loginPage.loginUser('standard_user', 'secret_sauce')
 })
 
 Then(
   'User should able to log into OrangeHrm dashboard successfully',
   async () => {
-    // Write code here that turns the phrase above into concrete actions
     await pageFixture.page.getByRole('heading', { name: 'Dashboard', level: 6 })
     pageFixture.logger.info('OrangeHrm dashboard load successful')
   }
