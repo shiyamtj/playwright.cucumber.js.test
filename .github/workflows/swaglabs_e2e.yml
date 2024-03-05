@@ -37,6 +37,6 @@ jobs:
           ARTIFACT_NAME: 'Report-${{matrix.BROWSER}}'
         with:
           name: '${{env.ARTIFACT_NAME}}'
-          path: ${{ github.workspace }}/test-result
+          path: ../test-result
           if-no-files-found: warn
           retention-days: 7
