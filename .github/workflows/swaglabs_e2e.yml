@@ -12,8 +12,9 @@ on:
         required: true
   schedule:
     - cron: '0 * * * 1-5'
+
 env:
-  BRAND: 'swaglabs'
+  BRAND:
 
 jobs:
   run-matrix:
@@ -31,10 +32,18 @@ jobs:
       - name: Build Docker Image
         run: |-
           docker build -f Dockerfile -t playwright-docker .
-      - name: Run E2E Cucumber tests in docker
+      - name: Run E2E Cucumber tests in docker with manual trigger
+        if: ${{ github.event.inputs.run-tag }} != ''
         env:
           RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test:${{ github.event.inputs.run-tag }}'
         run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
+
+      - name: Run E2E Cucumber tests in docker with schedule
+        if: ${{ github.event.inputs.run-tag }} == ''
+        env:
+          RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
+        run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
+
       # - name: List files in the repository
       #   run: |
       #     ls ${{ github.workspace }}
