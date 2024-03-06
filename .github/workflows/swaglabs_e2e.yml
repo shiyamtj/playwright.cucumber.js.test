@@ -36,7 +36,7 @@ jobs:
       - name: Build Docker Image
         run: |-
           docker build -f Dockerfile -t playwright-docker .
-      - name: Run E2E Cucumber tests in docker with manual trigger
+      - name: Run E2E Cucumber tests in docker
         if: ${{ github.event.inputs.run-tag }} != null
         env:
           TEST_COMMAND: ${{ github.event.inputs.run-tag != null && github.event.inputs.run-tag || 'test' }}
