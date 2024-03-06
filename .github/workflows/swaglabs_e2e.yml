@@ -1,6 +1,9 @@
 name: E2E Tests
 run-name: 'E2E Swag Labs tests'
+
 on:
+  push:
+    branches: -main
   workflow_dispatch:
     inputs:
       run-tag:
