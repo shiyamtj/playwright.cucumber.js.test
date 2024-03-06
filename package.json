@@ -6,6 +6,8 @@
   "scripts": {
     "pretest": "npx ts-node support/init.ts",
     "test": "cross-env ENV=test cucumber-js test",
+    "test:smoke": "cross-env ENV=test cucumber-js test --tags @smoke",
+    "test:regression": "cross-env ENV=test cucumber-js test --tags @regression",
     "posttest": "node ./support/htmlReportGenerator.js"
   },
   "devDependencies": {

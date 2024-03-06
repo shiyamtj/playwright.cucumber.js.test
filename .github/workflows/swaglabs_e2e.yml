@@ -3,13 +3,12 @@ run-name: 'E2E Swag Labs tests'
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      run-tag:
         type: choice
-        description: Pick environment to run
+        description: Pick execution type to run
         options:
-          - Stub
-          - Test
-          - Staging
+          - smoke
+          - regression
         required: true
   schedule:
     - cron: '0 * * * 1-5'
@@ -34,7 +33,7 @@ jobs:
           docker build -f Dockerfile -t playwright-docker .
       - name: Run E2E Cucumber tests in docker
         env:
-          RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
+          RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test:${{ github.event.inputs.run-tag }}'
         run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
       # - name: List files in the repository
       #   run: |
