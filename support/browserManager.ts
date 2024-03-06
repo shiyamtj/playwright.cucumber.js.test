@@ -5,7 +5,7 @@ const options: LaunchOptions = {}
 export const InvokeBrowser = () => {
   const browserType = process.env.BROWSER
   options.headless = process.env.HEAD === 'true'
-
+  console.log(`Browser initiated as ${browserType}`)
   switch (browserType) {
     case 'chrome':
       return chromium.launch(options)

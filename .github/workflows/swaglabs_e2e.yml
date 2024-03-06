@@ -24,7 +24,7 @@ jobs:
   run-matrix:
     strategy:
       matrix:
-        BROWSER: [chrome]
+        BROWSER: [chrome, firefox, webkit]
       fail-fast: false
     runs-on:
       - ubuntu-latest
@@ -39,6 +39,7 @@ jobs:
       - name: Run E2E Cucumber tests in docker
         if: ${{ github.event.inputs.run-tag }} != null
         env:
+          BROWSER: ${{matrix.BROWSER}}
           TEST_COMMAND: ${{ github.event.inputs.run-tag != null && format('test:{0}',github.event.inputs.run-tag) || 'test' }}
         run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
 
