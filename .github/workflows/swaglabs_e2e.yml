@@ -1,7 +1,19 @@
 name: E2E Tests
 run-name: 'E2E Swag Labs tests'
 on:
-  workflow_dispatch: {}
+  workflow_dispatch:
+    inputs:
+      name:
+        type: choice
+        description: Pick environment to run
+        options:
+          - Stub
+          - Test
+          - Staging
+      message:
+        required: true
+      environment:
+        type: environment
   schedule:
     - cron: '30 20 * * 1'
 env:
