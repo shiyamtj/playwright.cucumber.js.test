@@ -37,16 +37,16 @@ jobs:
         run: |-
           docker build -f Dockerfile -t playwright-docker .
       - name: Run E2E Cucumber tests in docker with manual trigger
-        if: ${{ github.event.inputs.run-tag }} != ''
+        if: ${{ github.event.inputs.run-tag }} != null
         env:
-          RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test:${{ github.event.inputs.run-tag }}'
-        run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
+          TEST_COMMAND: ${{ github.event.inputs.run-tag != null && github.event.inputs.run-tag || 'test' }}
+        run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
 
-      - name: Run E2E Cucumber tests in docker with schedule
-        if: ${{ github.event.inputs.run-tag }} == ''
-        env:
-          RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
-        run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
+      # - name: Run E2E Cucumber tests in docker with schedule
+      # if: ${{ github.event.inputs.run-tag }} == ''
+      #   env:
+      #     RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
+      #   run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
 
       # - name: List files in the repository
       #   run: |
