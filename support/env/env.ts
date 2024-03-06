@@ -4,7 +4,7 @@ import * as os from 'os'
 export const getEnv = () => {
   if (process.env.ENV) {
     dotenv.config({
-      override: true,
+      override: false,
       path: `./support/env/.env.${process.env.ENV}`,
     })
   } else {

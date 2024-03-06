@@ -4,7 +4,7 @@ declare global {
   namespace NodeJS {
     interface ProcessEnv {
       BROWSER: 'chrome' | 'firefox' | 'webkit'
-      ENV: 'staging' | 'prod' | 'test'
+      ENV: 'test' | 'ci'
       BASEURL: string
       HEAD: 'true' | 'false'
       PLATFORM: string
