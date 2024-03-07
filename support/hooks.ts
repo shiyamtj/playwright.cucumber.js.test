@@ -44,7 +44,7 @@ After(async function ({ pickle, result }) {
   let videoPath: string
   let img: Buffer
 
-  if (result?.status === Status.FAILED) {
+  if (result?.status === Status.FAILED || result?.status === Status.PASSED) {
     img = await pageFixture.page.screenshot({
       path: `./test-result/screenshots/${pickle.name}.png`,
       type: 'png',

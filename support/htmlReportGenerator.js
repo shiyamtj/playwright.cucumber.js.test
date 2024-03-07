@@ -29,6 +29,7 @@ var options = {
   metadata: {
     'App Version': '1.1.1',
     'Test Environment': 'QA',
+    Browser: process.env.BROWSER,
     Platform: 'Web/React',
     Sprint: 'Sprint 001',
   },

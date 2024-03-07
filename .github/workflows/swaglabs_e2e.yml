@@ -40,7 +40,7 @@ jobs:
         if: ${{ github.event.inputs.run-tag }} != null
         env:
           TEST_COMMAND: ${{ github.event.inputs.run-tag != null && format('test:{0}',github.event.inputs.run-tag) || 'test' }}
-        run: docker run -e BROWSER='${{matrix.BROWSER}}' -v "$(pwd)":/app playwright-docker:latest sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
+        run: docker run -e BROWSER='${{matrix.BROWSER}}' -e VIDEO=true -v "$(pwd)":/app playwright-docker:latest sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
 
       # - name: Run E2E Cucumber tests in docker with schedule
       # if: ${{ github.event.inputs.run-tag }} == ''
