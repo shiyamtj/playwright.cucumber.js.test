@@ -31,8 +31,7 @@ env:
 jobs:
   run-matrix:
     strategy:
-      matrix:
-        BROWSER: ${{github.event.inputs.run-tag != null && github.event.inputs.browser || '[chrome, firefox, webkit]'}}
+      matrix: BROWSER:[${{github.event.inputs.run-tag != null && github.event.inputs.browser || 'chrome, firefox, webkit'}}]
       fail-fast: false
     runs-on:
       - ubuntu-latest
