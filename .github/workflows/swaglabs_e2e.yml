@@ -22,7 +22,7 @@ env:
 
 jobs:
   run-matrix:
-    if: ${{github.event.inputs.run-tag == null}}
+    if: ${{github.event.inputs.run-tag == ''}}
     strategy:
       matrix:
         BROWSER: [chrome, firefox, webkit]
