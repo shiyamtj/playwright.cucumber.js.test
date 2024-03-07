@@ -14,6 +14,14 @@ on:
           - smoke
           - regression
         required: true
+      browser:
+        type: choice
+        description: Pick execution type to run
+        options:
+          - chrome
+          - firefox
+          - webkit
+        required: true
   schedule:
     - cron: '0 * * * 1-5'
 
@@ -22,10 +30,9 @@ env:
 
 jobs:
   run-matrix:
-    if: ${{github.event.inputs.run-tag == null && true || false}}
     strategy:
       matrix:
-        BROWSER: [chrome, firefox, webkit]
+        BROWSER: ${{github.event.inputs.run-tag != null && github.event.inputs.browser || '[chrome, firefox, webkit]'}}
       fail-fast: false
     runs-on:
       - ubuntu-latest
