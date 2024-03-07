@@ -33,7 +33,7 @@ jobs:
     if: github.event.inputs.run-tag=='' || github.event.inputs.browser==''
     strategy:
       matrix:
-        BROWSER: ['chrome, firefox, webkit']
+        BROWSER: ['chrome', 'firefox', 'webkit']
       fail-fast: false
     runs-on:
       - ubuntu-latest
