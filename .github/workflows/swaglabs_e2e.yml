@@ -1,5 +1,6 @@
 name: E2E Tests
-run-name: 'E2E Swag Labs tests'
+
+run-name: "E2E SwagLab Tests ${{github.event.inputs.run-tag != '' && github.event.inputs.run-tag || ''}} ${{github.event.inputs.browser != '' && github.event.inputs.browser || ''}}"
 
 on:
   push:
