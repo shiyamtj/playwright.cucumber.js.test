@@ -30,8 +30,10 @@ env:
 
 jobs:
   run-matrix:
+    if: github.event.inputs.run-tag=='' || github.event.inputs.browser==''
     strategy:
-      matrix: BROWSER:[${{github.event.inputs.run-tag != null && github.event.inputs.browser || 'chrome, firefox, webkit'}}]
+      matrix:
+        BROWSER: ['chrome, firefox, webkit']
       fail-fast: false
     runs-on:
       - ubuntu-latest
@@ -44,26 +46,41 @@ jobs:
         run: |-
           docker build -f Dockerfile -t playwright-docker .
       - name: Run E2E Cucumber tests in docker
-        if: ${{ github.event.inputs.run-tag }} != null
         env:
-          BROWSER_TYPE: ${{ github.event.inputs.run-tag != null && 'firefox' || matrix.BROWSER }}
-          TEST_COMMAND: ${{ github.event.inputs.run-tag != null && format('test:{0}',github.event.inputs.run-tag) || 'test' }}
+          TEST_COMMAND: ${{ 'test' }}
         run: docker run -e BROWSER='${{matrix.BROWSER}}' -e VIDEO=true -v "$(pwd)":/app playwright-docker:latest sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
-
-      # - name: Run E2E Cucumber tests in docker with schedule
-      # if: ${{ github.event.inputs.run-tag }} == ''
-      #   env:
-      #     RUN_COMMAND: 'yarn install --frozen-lockfile && yarn test'
-      #   run: docker run -v "$(pwd)":/app playwright-docker:latest  sh -c "${{env.RUN_COMMAND}}"
-
-      # - name: List files in the repository
-      #   run: |
-      #     ls ${{ github.workspace }}
       - name: Upload artifact
         if: always()
         uses: actions/upload-artifact@v3
         env:
           ARTIFACT_NAME: 'Report-${{matrix.BROWSER}}'
+        with:
+          name: '${{env.ARTIFACT_NAME}}'
+          path: ./test-result
+          if-no-files-found: warn
+          retention-days: 7
+
+  run-manual-trigger:
+    if: github.event.inputs.run-tag!='' || github.event.inputs.browser!=''
+    runs-on:
+      - ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker Image
+        run: |-
+          docker build -f Dockerfile -t playwright-docker .
+      - name: Run E2E Cucumber tests in docker
+        env:
+          TEST_COMMAND: ${{ format('test:{0}',github.event.inputs.run-tag) }}
+        run: docker run -e BROWSER='${{github.event.inputs.browser}}' -e VIDEO=true -v "$(pwd)":/app playwright-docker:latest sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
+      - name: Upload artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        env:
+          ARTIFACT_NAME: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}'
         with:
           name: '${{env.ARTIFACT_NAME}}'
           path: ./test-result
