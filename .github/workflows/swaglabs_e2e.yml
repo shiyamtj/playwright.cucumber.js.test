@@ -26,6 +26,11 @@ on:
   schedule:
     - cron: '0 * * * 1-5'
 
+permissions:
+   contents: read
+   pages: write
+   id-token: write
+
 jobs:
   run-matrix:
     if: github.event.inputs.run-tag=='' || github.event.inputs.browser==''
