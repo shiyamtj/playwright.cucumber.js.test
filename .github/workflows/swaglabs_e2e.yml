@@ -62,21 +62,21 @@ jobs:
           path: ./test-result
           if-no-files-found: warn
           retention-days: 7
-      - name: Configure to GitHub Pages
-        uses: actions/configure-pages@v4.0.0
-        with:
-          token: ${{ github.token }}
+      # - name: Configure to GitHub Pages
+      #   uses: actions/configure-pages@v4.0.0
+      #   with:
+      #     token: ${{ github.token }}
       - name: Upload github page artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with: 
-          name: 'Report-${{matrix.BROWSER}}'
+          name: 'ReportArtifactToGithub-${{matrix.BROWSER}}-${github.run_id}'
           path: './test-result'
           retention-days: 7
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4.0.4
         with:
           token: ${{ github.token }}
-          artifact_name: '${{env.ARTIFACT_NAME}}'
+          artifact_name: 'ReportArtifactToGithub-${{matrix.BROWSER}}-${github.run_id}'
 
   run-manual-trigger:
     if: github.event.inputs.run-tag!='' || github.event.inputs.browser!=''
@@ -98,24 +98,24 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v3
         env:
-          ARTIFACT_NAME: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}'
+          ARTIFACT_NAME: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${github.run_id}'
         with:
           name: '${{env.ARTIFACT_NAME}}'
           path: ./test-result
           if-no-files-found: warn
           retention-days: 7
-      - name: Configure to GitHub Pages
-        uses: actions/configure-pages@v4.0.0
-        with:
-          token: ${{ github.token }}
+      # - name: Configure to GitHub Pages
+      #   uses: actions/configure-pages@v4.0.0
+      #   with:
+      #     token: ${{ github.token }}
       - name: Upload github page artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with: 
-          name: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}'
+          name: 'ReportArtifactToGithub-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${github.run_id}'
           path: './test-result'
           retention-days: 7
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v4.0.4
         with:
           token: ${{ github.token }}
-          artifact_name: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}'
+          artifact_name: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${github.run_id}'
