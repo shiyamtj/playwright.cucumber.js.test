@@ -60,6 +60,15 @@ jobs:
           path: ./test-result
           if-no-files-found: warn
           retention-days: 7
+      - name: Deploy to GitHub Pages
+        uses: actions/configure-pages@v4.0.0
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with: 
+          path: './test-result'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
 
   run-manual-trigger:
     if: github.event.inputs.run-tag!='' || github.event.inputs.browser!=''
@@ -87,3 +96,12 @@ jobs:
           path: ./test-result
           if-no-files-found: warn
           retention-days: 7
+      - name: Deploy to GitHub Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with: 
+          path: './test-result'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
