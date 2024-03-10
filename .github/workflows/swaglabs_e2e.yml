@@ -26,9 +26,6 @@ on:
   schedule:
     - cron: '0 * * * 1-5'
 
-env:
-  BRAND:
-
 jobs:
   run-matrix:
     if: github.event.inputs.run-tag=='' || github.event.inputs.browser==''
@@ -64,10 +61,10 @@ jobs:
         uses: actions/configure-pages@v4.0.0
         with:
           token: ${{ github.token }}
-      - name: Upload artifact
+      - name: Upload github page artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with: 
-          name: '${{env.ARTIFACT_NAME}}'
+          name: 'Report-${{matrix.BROWSER}}'
           path: './test-result'
           retention-days: 7
       - name: Deploy to GitHub Pages
@@ -106,7 +103,7 @@ jobs:
         uses: actions/configure-pages@v4.0.0
         with:
           token: ${{ github.token }}
-      - name: Upload artifact
+      - name: Upload github page artifact
         uses: actions/upload-pages-artifact@v3.0.1
         with: 
           name: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}'
