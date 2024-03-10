@@ -52,16 +52,16 @@ jobs:
         env:
           TEST_COMMAND: ${{ 'test' }}
         run: docker run -e BROWSER='${{matrix.BROWSER}}' -e VIDEO=true -v "$(pwd)":/app playwright-docker:latest sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
-      - name: Upload artifact
-        if: always()
-        uses: actions/upload-artifact@v3
-        env:
-          ARTIFACT_NAME: 'Report-${{matrix.BROWSER}}'
-        with:
-          name: '${{env.ARTIFACT_NAME}}'
-          path: ./test-result
-          if-no-files-found: warn
-          retention-days: 7
+      # - name: Upload artifact
+      #   if: always()
+      #   uses: actions/upload-artifact@v3
+      #   env:
+      #     ARTIFACT_NAME: 'Report-${{matrix.BROWSER}}'
+      #   with:
+      #     name: '${{env.ARTIFACT_NAME}}'
+      #     path: ./test-result
+      #     if-no-files-found: warn
+      #     retention-days: 7
       # - name: Configure to GitHub Pages
       #   uses: actions/configure-pages@v4.0.0
       #   with:
@@ -94,16 +94,16 @@ jobs:
         env:
           TEST_COMMAND: ${{ format('test:{0}',github.event.inputs.run-tag) }}
         run: docker run -e BROWSER='${{github.event.inputs.browser}}' -e VIDEO=true -v "$(pwd)":/app playwright-docker:latest sh -c "yarn install --frozen-lockfile && yarn ${{env.TEST_COMMAND}}"
-      - name: Upload artifact
-        if: always()
-        uses: actions/upload-artifact@v3
-        env:
-          ARTIFACT_NAME: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${{github.run_id}}'
-        with:
-          name: '${{env.ARTIFACT_NAME}}'
-          path: ./test-result
-          if-no-files-found: warn
-          retention-days: 7
+      # - name: Upload artifact
+      #   if: always()
+      #   uses: actions/upload-artifact@v3
+      #   env:
+      #     ARTIFACT_NAME: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${{github.run_id}}'
+      #   with:
+      #     name: '${{env.ARTIFACT_NAME}}'
+      #     path: ./test-result
+      #     if-no-files-found: warn
+      #     retention-days: 7
       # - name: Configure to GitHub Pages
       #   uses: actions/configure-pages@v4.0.0
       #   with:
@@ -118,4 +118,4 @@ jobs:
         uses: actions/deploy-pages@v4.0.4
         with:
           token: ${{ github.token }}
-          artifact_name: 'Report-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${{github.run_id}}'
+          artifact_name: 'ReportArtifactToGithub-${{github.event.inputs.run-tag}}-${{github.event.inputs.browser}}-${{github.run_id}}'
